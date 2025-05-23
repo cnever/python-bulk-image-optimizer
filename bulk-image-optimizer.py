@@ -11,7 +11,7 @@ TOTAL_ORIGINAL = 0
 TOTAL_COMPRESSED = 0
 TOTAL_GAIN = 0
 TOTAL_FILES = 0
-QUALITY = 85
+QUALITY = 75
 
 
 def compress(location):
@@ -34,6 +34,9 @@ def compress(location):
                     
                     try:
                         opt = Image.open(input_path)
+                        # Convert RGBA or P to RGB if needed
+                        if opt.mode in ['RGBA', 'P']:
+                            opt = opt.convert('RGB')
                     except:
                         #do nothing just print the file skipping
                         print(f'skipping file cannot open: {input_path}')
@@ -98,7 +101,7 @@ def compress(location):
                     input_file = input_path
                     output_file= input_file.replace('input','output')        
                     print('File not image, copying instead: ' + input_path)
-                    subprocess.call('cp ' + input_file + ' ' + output_file, shell=True)
+                    subprocess.call('copy ' + input_file + ' ' + output_file, shell=True)
 
 
 if __name__ == '__main__':
